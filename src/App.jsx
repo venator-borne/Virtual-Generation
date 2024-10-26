@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Login from './components/Login';
 import Signup from './components/Signup';
 import { ModelsProvider } from "./lib/ModelsContext.jsx";
-import BasicTabs from "./components/home/tabs/Tabs.jsx";
+import BasicTabs from "./components/tabs/Tabs.jsx";
 
 function App() {
   return (

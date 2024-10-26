@@ -11,18 +11,19 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Drawer from '@mui/material/Drawer';
-import TrainingTab from './TrainingTab';
-import InferenceTab from './InferenceTab';
-import ToolsTab from './ToolsTab';
-import ModelsTab from './ModelsTab';
-import ResourcesTab from './ResourcesTab';
+import Training from './Training';
+import Inference from './Inference';
+import Tools from './Tools';
+import Models from './Models';
+import Resources from './Resources';
 import { useEffect, useState } from 'react';
 import { Typography } from '@mui/material';
-import { getUserInfo, logout } from '../lib/mh';
+import { logout } from '../../lib/api.js';
 import { styled } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import ListIcon from '@mui/icons-material/List';
+import { useSelector } from "react-redux";
 
 const AntTab = styled((props) => <Tab disableRipple {...props} />)(({ theme }) => ({
   textTransform: 'none',
@@ -59,6 +60,8 @@ const AntTab = styled((props) => <Tab disableRipple {...props} />)(({ theme }) =
 }));
 
 export default function BasicTabs() {
+  const userSlice = useSelector(state => state.user);
+
   const [value, setValue] = useState('1');
   const [user, setUser] = useState({username: '', email: ''});
 
@@ -70,7 +73,6 @@ export default function BasicTabs() {
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
-
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -84,12 +86,7 @@ export default function BasicTabs() {
 
   useEffect(() => {
     // localStorage.setItem('loggedIn', true);
-    async function fetchUser() {
-      let user = await getUserInfo();
-      setUser(user);
-      console.log(user);
-    }
-    fetchUser();
+    setUser({username: userSlice.username, email: userSlice.email});
     const initialTabIndex = localStorage.getItem('tab-index') || '1';
     setValue(initialTabIndex);
   }, [])
@@ -167,23 +164,23 @@ export default function BasicTabs() {
           </Box>
 
           <TabPanel value="1" keepMounted={true}>
-            <InferenceTab value={value} index={0}/>
+            <Inference value={value} index={0}/>
           </TabPanel>
 
           <TabPanel value="2" keepMounted={true}>
-            <TrainingTab value={value} index={1}/>
+            <Training value={value} index={1}/>
           </TabPanel>
 
           <TabPanel value="3" keepMounted={true}>
-            <ModelsTab />
+            <Models />
           </TabPanel>
 
           <TabPanel value="4" keepMounted={true}>
-            <ResourcesTab />
+            <Resources />
           </TabPanel>
 
           <TabPanel value="5" keepMounted={true}>
-            <ToolsTab />
+            <Tools />
           </TabPanel>
 
         </TabContext>

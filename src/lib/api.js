@@ -1,6 +1,15 @@
 import axios from 'axios';
+import store from "../store/store.js";
 
 const URL = import.meta.env.VITE_SERVER_URL;
+
+axios.interceptors.request.use((config) => {
+  const token = store.getState().user.token;
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+}, (error) => {return Promise.reject(error);});
 
 export const publicKey = async () => {
   try {
@@ -12,20 +21,16 @@ export const publicKey = async () => {
   }
 }
 
-export const login = async (username, password) => {
+export const login = async (email, password) => {
   try {
-    await axios.post(`${URL}/login`, {
-      username: username,
+    let res = await axios.post(`${URL}/security/login`, {
+      email: email,
       password: password
-    }, {
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      }
-    })
-    return true;
+    });
+    return {status: true, data: res.data};
   } catch (e) {
     console.log(e);
-    return false;
+    return {status: false, data: e.response.data};
   }
 }
 
@@ -38,4 +43,8 @@ export const signup = async (info) => {
     console.log(e.response.data);
     return {status: e.response.status, data: e.response.data};
   }
+}
+
+export const logout = async () => {
+
 }

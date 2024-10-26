@@ -2,10 +2,12 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { TextField, Button, Container, Typography, Box, Link as MuiLink, Card, CardContent } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { login, publicKey } from "../lib/api.js";
 import JSEncrypt from "jsencrypt";
 import Swal from "sweetalert2";
+import { useDispatch } from "react-redux";
+import { setUserSlice } from "../store/slice/UserSlice.js";
 
 const schema = yup.object().shape({
   email: yup.string().email().required('Email is required'),
@@ -21,6 +23,9 @@ const LoginPage = () => {
     resolver: yupResolver(schema),
   });
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const CONFIRM_BUTTON_COLOR = '#1976d2';
 
   const onSubmit = async (data) => {
@@ -29,8 +34,10 @@ const LoginPage = () => {
       let encrypt = new JSEncrypt();
       encrypt.setPublicKey(key);
       let res = await login(data.email, encrypt.encrypt(data.password));
-      if (res) {
-        window.location.href = "/app";
+      if (res.status) {
+        console.log(res.data);
+        dispatch(setUserSlice(res.data.token));
+        navigate('/app');
       } else {
         Swal.fire({
           title: "Login Failed",
