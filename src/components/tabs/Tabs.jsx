@@ -391,7 +391,7 @@ export default function BasicTabs() {
         <Drawer open={resources} onClose={toggleResourcesDrawer(false)} anchor='left'
                 PaperProps={{
                   sx: {
-                    background: 'linear-gradient(to right, white, rgba(255, 255, 255, 0))',
+                    background: 'linear-gradient(to right, #f9f9f9, #7f7f7f)',
                     backdropFilter: 'blur(10px)',
                     boxShadow: 'none',
                     border: "none",

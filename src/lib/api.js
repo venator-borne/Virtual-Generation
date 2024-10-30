@@ -49,9 +49,20 @@ export const logout = async () => {
 
 }
 
-export const getResources = async (page, size) => {
+export const getResources = async (data) => {
   try {
-    let res = await axios.get(`${URL}/resources/files?page=${page}&size=${size}`);
+    let res = await axios.post(`${URL}/resources/files`, data);
+    console.log(res.data);
+    return res.data;
+  } catch (e) {
+    console.log(e);
+    return null;
+  }
+}
+
+export const getResourcesCount = async (data) => {
+  try {
+    let res = await axios.post(`${URL}/resources/count`, data);
     console.log(res.data);
     return res.data;
   } catch (e) {
