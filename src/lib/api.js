@@ -48,3 +48,54 @@ export const signup = async (info) => {
 export const logout = async () => {
 
 }
+
+export const getResources = async (page, size) => {
+  try {
+    let res = await axios.get(`${URL}/resources/files?page=${page}&size=${size}`);
+    console.log(res.data);
+    return res.data;
+  } catch (e) {
+    console.log(e);
+    return null;
+  }
+}
+
+export const check = async (identifier, filename) => {
+  try {
+    let res = await axios.get(`${URL}/resources/upload?identifier=${identifier}&filename=${filename}`);
+    console.log(res.data);
+    return res.data;
+  } catch (e) {
+    console.log(e);
+    return null;
+  }
+}
+
+export const upload = async (data, retries, onProgress) => {
+  try {
+    let res = await axios.post(`${URL}/resources/upload`, data, {
+      headers: {'Content-Type': 'multipart/form-data'},
+      onUploadProgress: onProgress,
+    });
+    console.log(res.data);
+    return true;
+  } catch (e) {
+    if (retries > 0) {
+      return await upload(data, retries - 1, onProgress);
+    } else {
+      console.log(e.response.data);
+      return false;
+    }
+  }
+}
+
+export const merge = async (data) => {
+  try {
+    let res = await axios.post(`${URL}/resources/merge`, data);
+    console.log(res.data);
+    return true;
+  } catch (e) {
+    console.log(e.response.data);
+    return false;
+  }
+}
