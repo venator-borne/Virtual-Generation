@@ -25,7 +25,7 @@ import {
     CircularProgress,
     Dialog, DialogActions, DialogContent, DialogTitle,
     IconButton,
-    InputAdornment, LinearProgress,
+    InputAdornment, LinearProgress, Paper,
     SvgIcon,
     TextField,
     Typography
@@ -40,6 +40,7 @@ import SparkMD5 from "spark-md5";
 import CustomCircularProgress from "../parts/CustomCircularProgress.jsx";
 import CustomLinearProgress from "../parts/CustomLinearProgress.jsx";
 import ResourcesTable from "../parts/ResourcesTable.jsx";
+import { lightGreen } from "@mui/material/colors";
 
 const AntTab = styled((props) => <Tab disableRipple {...props} />)(({theme}) => ({
     textTransform: 'none',
@@ -269,7 +270,9 @@ export default function BasicTabs() {
         } else {
             console.log("error!!!");
         }
-        cancelUpload();
+        setTimeout(() => {
+            cancelUpload();
+        }, 1000);
     }
 
     const DrawerList = (
@@ -291,7 +294,7 @@ export default function BasicTabs() {
     );
 
     const ResourcesList = (
-        <Box sx={{width: 600}} role="presentation">
+        <Box sx={{width: '100%'}} role="presentation">
             <Box sx={{width: '80%', margin: 'auto'}}>
                 <List>
                     <ListItem key={'search'} sx={{paddingLeft: 0}}>
@@ -410,7 +413,7 @@ export default function BasicTabs() {
                             backdropFilter: 'blur(10px)',
                             boxShadow: 'none',
                             border: "none",
-                            width: 600, // 保持一致的宽度
+                            width: '30%', // 保持一致的宽度
                         },
                     }}
                     sx={{zIndex: 9999}}
@@ -459,31 +462,32 @@ export default function BasicTabs() {
                     <TabList onChange={handleChange} aria-label="tabs" centered>
                         <AntTab label="Inference" value="1" style={{minWidth: 50}}/>
                         <AntTab label="Training" value="2" style={{minWidth: 50}}/>
-                        <AntTab label="Models" value="3" style={{minWidth: 50}}/>
-                        <AntTab label="Resources" value="4" style={{minWidth: 50}}/>
                         <AntTab label="Tools" value="5" style={{minWidth: 50}}/>
                     </TabList>
                 </Box>
 
-                <TabPanel value="1" keepMounted={true}>
-                    <Inference value={value} index={0}/>
-                </TabPanel>
+                <Box sx={{display: 'flex'}}>
+                    <Box sx={{flex: 5, margin: 3}}>
+                        <Paper sx={{boxShadow: 2}}>
+                            <TabPanel value="1" keepMounted={true}>
+                                <Inference value={value} index={0}/>
+                            </TabPanel>
 
-                <TabPanel value="2" keepMounted={true}>
-                    <Training value={value} index={1}/>
-                </TabPanel>
+                            <TabPanel value="2" keepMounted={true}>
+                                <Training value={value} index={1}/>
+                            </TabPanel>
 
-                <TabPanel value="3" keepMounted={true}>
-                    <Models/>
-                </TabPanel>
-
-                <TabPanel value="4" keepMounted={true}>
-                    <Resources/>
-                </TabPanel>
-
-                <TabPanel value="5" keepMounted={true}>
-                    <Tools/>
-                </TabPanel>
+                            <TabPanel value="3" keepMounted={true}>
+                                <Tools/>
+                            </TabPanel>
+                        </Paper>
+                    </Box>
+                    <Box sx={{flex:3, margin: 3}}>
+                        <Paper sx={{boxShadow: 2}}>
+                            <Models></Models>
+                        </Paper>
+                    </Box>
+                </Box>
 
             </TabContext>
         </Box>

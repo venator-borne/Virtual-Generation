@@ -8,6 +8,7 @@ import JSEncrypt from "jsencrypt";
 import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import { setUserSlice } from "../store/slice/UserSlice.js";
+import { useEffect } from "react";
 
 const schema = yup.object().shape({
   email: yup.string().email().required('Email is required'),

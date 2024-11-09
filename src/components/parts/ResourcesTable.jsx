@@ -111,6 +111,7 @@ export default function ResourcesTable() {
               <Paper
                   sx={{
                     padding: 2,
+                    width: '70%',
                     backgroundColor: 'transparent',
                     boxShadow: 1,
                     zIndex: 1000,
@@ -161,7 +162,7 @@ export default function ResourcesTable() {
                   <TableRow key={item.id}>
                     <TableCell sx={{border: 'none', paddingLeft: 0}}>
                       <Paper sx={{
-                        width: '100%',
+
                         backgroundColor: 'transparent',
                       }}>
                         <Box sx={{padding: 2}}>
