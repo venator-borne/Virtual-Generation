@@ -17,9 +17,9 @@ import Drawer from '@mui/material/Drawer';
 import Training from './Training';
 import Inference from './Inference';
 import Tools from './Tools';
-import Models from './Models';
+// import Models from './Models';
 import Resources from './Resources';
-import {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
     Button,
     CircularProgress,
@@ -41,6 +41,11 @@ import CustomCircularProgress from "../parts/CustomCircularProgress.jsx";
 import CustomLinearProgress from "../parts/CustomLinearProgress.jsx";
 import ResourcesTable from "../parts/ResourcesTable.jsx";
 import { lightGreen } from "@mui/material/colors";
+import ModelViewer from "./ModelViewer.jsx";
+import {Canvas} from "@react-three/fiber";
+import {OrbitControls} from "@react-three/drei";
+import Text2Model from "./Text2Model.jsx";
+import Rebuild from "./rebuild.jsx";
 
 const AntTab = styled((props) => <Tab disableRipple {...props} />)(({theme}) => ({
     textTransform: 'none',
@@ -460,9 +465,10 @@ export default function BasicTabs() {
                     bgcolor: "white"
                 }}>
                     <TabList onChange={handleChange} aria-label="tabs" centered>
-                        <AntTab label="Inference" value="1" style={{minWidth: 50}}/>
-                        <AntTab label="Training" value="2" style={{minWidth: 50}}/>
-                        <AntTab label="Tools" value="5" style={{minWidth: 50}}/>
+                        <AntTab label="3D Reconstruction" value="1" style={{minWidth: 50}}/>
+                        <AntTab label="Digital Human" value="2" style={{minWidth: 50}}/>
+                        <AntTab label="Text2Model" value="3" style={{minWidth: 50}}/>
+                        <AntTab label="3D Model Viewer" value="4" style={{minWidth: 50}}/>
                     </TabList>
                 </Box>
 
@@ -470,23 +476,29 @@ export default function BasicTabs() {
                     <Box sx={{flex: 5, margin: 3}}>
                         <Paper sx={{boxShadow: 2}}>
                             <TabPanel value="1" keepMounted={true}>
-                                <Inference value={value} index={0}/>
+                                <Rebuild value={value} index={0}/>
                             </TabPanel>
 
                             <TabPanel value="2" keepMounted={true}>
                                 <Training value={value} index={1}/>
                             </TabPanel>
 
-                            <TabPanel value="3" keepMounted={true}>
-                                <Tools/>
+                            <TabPanel value="3" keepMounted={false}>
+                                <Text2Model value={value} index={2}/>
+                            </TabPanel>
+
+                            <TabPanel value="4" keepMounted={false}>
+                                {/*<Tools/>*/}
+                                <ModelViewer value={value} index={3}/>
                             </TabPanel>
                         </Paper>
                     </Box>
-                    <Box sx={{flex:3, margin: 3}}>
-                        <Paper sx={{boxShadow: 2}}>
-                            <Models></Models>
-                        </Paper>
-                    </Box>
+                    {/*<Box sx={{flex:3, margin: 3}}>*/}
+                    {/*    <Paper sx={{boxShadow: 2}}>*/}
+                    {/*        /!*<Models></Models>*!/*/}
+                    {/*        <ModelViewer />*/}
+                    {/*    </Paper>*/}
+                    {/*</Box>*/}
                 </Box>
 
             </TabContext>
