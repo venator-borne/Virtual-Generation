@@ -14,9 +14,7 @@ import StorageIcon from '@mui/icons-material/Storage';
 import CloudQueueIcon from '@mui/icons-material/CloudQueue';
 import SearchIcon from '@mui/icons-material/Search';
 import Drawer from '@mui/material/Drawer';
-import Training from './Training';
-import Inference from './Inference';
-import Tools from './Tools';
+import DigitalHuman from './DigitalHuman.jsx';
 // import Models from './Models';
 import Resources from './Resources';
 import React, {useEffect, useRef, useState} from 'react';
@@ -45,7 +43,7 @@ import ModelViewer from "./ModelViewer.jsx";
 import {Canvas} from "@react-three/fiber";
 import {OrbitControls} from "@react-three/drei";
 import Text2Model from "./Text2Model.jsx";
-import Rebuild from "./rebuild.jsx";
+import Rebuild from "./Rebuild.jsx";
 
 const AntTab = styled((props) => <Tab disableRipple {...props} />)(({theme}) => ({
     textTransform: 'none',
@@ -480,7 +478,7 @@ export default function BasicTabs() {
                             </TabPanel>
 
                             <TabPanel value="2" keepMounted={true}>
-                                <Training value={value} index={1}/>
+                                <DigitalHuman value={value} index={1}/>
                             </TabPanel>
 
                             <TabPanel value="3" keepMounted={false}>
